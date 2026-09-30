@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daily Task & Progress Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Dashboard Header -->
+        <header class="dashboard">
+            <div class="dash-card">
+                <span class="dash-label">Today's Progress</span>
+                <span class="dash-value" id="dash-progress">0%</span>
+            </div>
+            <div class="dash-card">
+                <span class="dash-label">Today's Points</span>
+                <span class="dash-value" id="dash-points">0 / 0</span>
+            </div>
+            <div class="dash-card">
+                <span class="dash-label">Streak</span>
+                <span class="dash-value" id="dash-streak">0 🔥</span>
+            </div>
+            <div class="dash-card">
+                <span class="dash-label">Total Points</span>
+                <span class="dash-value" id="dash-total-points">0</span>
+            </div>
+        </header>
+
+        <!-- Main Task Area -->
+        <section class="section-card">
+            <div class="section-header">
+                <div>
+                    <h2>Daily Tasks</h2>
+                    <p class="subtext" id="selected-date-display">Today</p>
+                </div>
+                <button class="btn btn-primary" id="open-add-modal-btn">+ Add Task</button>
+            </div>
+
+            <!-- View History Banner -->
+            <div id="history-banner" class="history-banner hidden">
+                <span>Viewing History: <strong id="history-date-label"></strong></span>
+                <button class="btn btn-small" id="return-today-btn">Return to Today</button>
+            </div>
+
+            <!-- Task List Container -->
+            <div id="task-list" class="task-list"></div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon">📝</div>
+                <h3>No tasks added yet</h3>
+                <p>Add your first daily task to get started.</p>
+            </div>
+        </section>
+
+        <!-- Progress Graph Section -->
+        <section class="section-card">
+            <h2>Performance Trend</h2>
+            <p class="subtext">Daily completion rate history</p>
+            <div class="chart-container">
+                <canvas id="progressChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section class="section-card">
+            <div class="calendar-header">
+                <button class="calendar-nav" id="prev-month-btn">&lt;</button>
+                <h2 id="calendar-month-year"></h2>
+                <button class="calendar-nav" id="next-month-btn">&gt;</button>
+            </div>
+            <div class="calendar-grid-header">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+            <div id="calendar-days" class="calendar-grid"></div>
+            
+            <div class="calendar-legend">
+                <span><i class="dot dot-excellent"></i> 80-100%</span>
+                <span><i class="dot dot-partial"></i> 1-79%</span>
+                <span><i class="dot dot-poor"></i> 0%</span>
+                <span><i class="dot dot-locked"></i> Locked</span>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="section-card">
+            <h2>🏆 Achievements</h2>
+            <p class="subtext">Milestones unlocked automatically based on activity</p>
+            <div id="achievements-list" class="achievements-grid"></div>
+        </section>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="task-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add New Daily Task</h3>
+            <p class="subtext">This task will automatically persist for future days.</p>
+            <input type="text" id="task-name-input" placeholder="e.g. Study Maths, Workout..." maxlength="40">
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" id="save-task-btn">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Tasks Modal -->
+    <div id="manage-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Manage Tasks List</h3>
+            <p class="subtext">Delete tasks you no longer want to track globally.</p>
+            <div id="manage-task-list" class="manage-task-list"></div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="close-manage-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Tasks Toggle -->
+    <div class="manage-footer">
+        <button class="btn-link" id="open-manage-modal-btn">⚙️ Manage Active Tasks List</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
